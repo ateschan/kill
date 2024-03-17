@@ -1,43 +1,46 @@
-#![allow(dead_code)]
-#![allow(unused_imports)]
-#![allow(unused_variables)]
+// Tutorial 1
+//
+// use cursive::views::{Dialog, TextView};
+//
+// fn main(){
+//     let mut siv = cursive::default();
+//     
+//     //State is defined by layers to an application using a stackview
+//     siv.add_layer(Dialog::around(TextView::new("HELLO WORLD"))
+//         .title("Cursive")
+//         .button("Quit", |s| s.quit()));
+//
+//     siv.run();
+// }
+//
+//
+//
 
-pub mod action;
-pub mod app;
-pub mod cli;
-pub mod components;
-pub mod config;
-pub mod mode;
-pub mod tui;
+pub mod state;
 pub mod utils;
+pub mod games;
 
-use clap::Parser;
-use cli::Cli;
-use color_eyre::eyre::Result;
 
-use crate::{
-  app::App,
-  utils::{initialize_logging, initialize_panic_handler, version},
-};
+use state::exit::show_exit_menu;
+use state::intro::show_intro_menu;
+use cursive::{Cursive, View};
+use cursive::views::{Dialog, TextView};
+use cursive::view::{Margins, Resizable};
+use cursive::theme::Effect;
 
-async fn tokio_main() -> Result<()> {
-  initialize_logging()?;
+fn main() {
+    let mut siv = cursive::default();
+    
+    //Intro point...
+    siv.add_layer(Dialog::new()
+        .content(TextView::new("KEEP. IT. LINUX. LOSER.").style(Effect::Strikethrough))
+        .padding(Margins::lrtb(10, 10, 5, 5))
+        .title("MAIN MENU")
+        .button("EXIT", |s| show_exit_menu(s))
+        .button("ENTER", |s| show_intro_menu(s)));
 
-  initialize_panic_handler()?;
-
-  let args = Cli::parse();
-  let mut app = App::new(args.tick_rate, args.frame_rate)?;
-  app.run().await?;
-
-  Ok(())
+    siv.run();
 }
 
-#[tokio::main]
-async fn main() -> Result<()> {
-  if let Err(e) = tokio_main().await {
-    eprintln!("{} error: Something went wrong", env!("CARGO_PKG_NAME"));
-    Err(e)
-  } else {
-    Ok(())
-  }
-}
+
+

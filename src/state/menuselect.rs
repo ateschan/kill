@@ -1,14 +1,10 @@
-use cursive::view::{Margins, Nameable, Resizable};
+use cursive::view::Margins;
 use cursive::views::{Dialog, ScrollView, SelectView};
 use cursive::Cursive;
 
-use std::vec::Vec;
-use crate::games::{test01, test02};
-use crate::games::meta::Game;
+use crate::games::{meta::Game, list::game_list, joined_together::new};
 use crate::state::game::engine;
 use crate::utils::user::User;
-
-
 
 pub fn menu_select(s: &mut Cursive, user : User){
 
@@ -16,64 +12,17 @@ pub fn menu_select(s: &mut Cursive, user : User){
         //Already "found" a user object
         let cpuser = user.clone();
         //Implement finding the proper game object based on &str
-        let game = test01::new();
+        let mut game : Game = new();
+            for i in &mut game_list().iter(){
+                if gamestr.eq(&i.name){
+                    game = i.clone();
+                }
+    }
         
         engine(s, game, cpuser);
     };
 
-    //pop into games.rs screen...
-    //Declare list of objects
-    let mut prod_games : Vec<Game> = Vec::new();
-
-    //Push completed games to list
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test01::new());  
-    prod_games.push(test02::new());  
+    let prod_games = game_list();
 
     s.pop_layer();
     let mut select = SelectView::<String>::new().on_submit(on_submit_closure);
@@ -91,5 +40,3 @@ pub fn menu_select(s: &mut Cursive, user : User){
         ));
 
 }
-
-

@@ -1,7 +1,7 @@
 //A user has a name, int it, and a vec of times with the coresponding index to the game
-use std::vec::Vec;
+//use std::vec::Vec;
 use std::default::Default;
-use crate::games::meta::Game;
+//use crate::games::meta::Game;
 //Adding a set of derive values to customize defaults
 
 #[derive(Default)]

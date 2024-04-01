@@ -1,5 +1,6 @@
 use std::collections::HashMap;
-use crate::utils::file::{self, fs_create, fs_delete};
+use crate::utils::file::{fs_create, fs_delete};
+use crate::scripter::check::compare;
 
 #[derive(Clone)]
 pub struct Game {
@@ -19,10 +20,10 @@ impl Game{
         let _ = fs_create(self.file_system);
     }
 
-    pub fn check(script : String){
+    pub fn check(self, output : String) -> bool{
        //Call scripter with {script, and correct_answer}
        //The scripter will return {STDOUT : String && answer_check : bool}
-       //
+        compare(self.correct_answer, output)
     }
 
     pub fn teardown(self){
@@ -30,6 +31,12 @@ impl Game{
     }
 }
 
+// impl Drop for Game {
+//     fn drop(&mut self) {
+//         self.clone().teardown()
+//     }
+// }
+//
 // I need to split each game into 3 phases...
 //
 // 1) ---> | setup | the game and create any nessesary files and directories

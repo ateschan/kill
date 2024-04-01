@@ -59,3 +59,32 @@ pub fn set_theme_light(s : &mut Cursive){
         }),
     });
 }
+
+pub fn set_theme_menu(s : &mut Cursive){
+    s.set_theme(cursive::theme::Theme {
+        shadow: true,
+        borders: BorderStyle::Simple,
+        palette: Palette::retro().with(|palette| {
+            use cursive::theme::BaseColor::*;
+
+            {
+                // First, override some colors from the base palette.
+                use cursive::theme::PaletteColor::*;
+                palette[Background] = Black.dark();
+                palette[View] =  Black.dark();
+                palette[Primary] = Green.dark();
+                palette[TitlePrimary] =  Green.dark();
+                palette[Secondary] =  Black.dark();
+                palette[Highlight] = Black.dark();
+            }
+
+            {
+                // Then override some styles.
+                use cursive::theme::Effect::*;
+                use cursive::theme::PaletteStyle::*;
+                use cursive::theme::Style;
+                palette[Highlight] = Style::from(Red.light()).combine(Bold);
+            }
+        }),
+    });
+}

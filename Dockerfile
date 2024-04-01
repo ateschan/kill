@@ -1,7 +1,7 @@
 #Copied from the other repo
 
 # Use the official Ubuntu image as the base image
-FROM ubuntu:22.04
+FROM ubuntu:latest
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
@@ -11,7 +11,9 @@ RUN apt-get update && \
     apt-get install -y \
     curl \
     build-essential \
-    openssh-server
+    openssh-server \ 
+    libncurses-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Rust using rustup
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y

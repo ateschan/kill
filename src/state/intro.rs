@@ -19,10 +19,12 @@
 //        --> yes? no?
 
 use crate::{utils::file::{check_for_name, return_dummy_user}, Cursive, Dialog, TextView};
-use cursive::{view::{Nameable, Resizable}, views::EditView};
+use cursive::{view::Nameable, views::EditView};
 use crate::state::menuselect::menu_select;
+use crate::utils::theme::set_theme_light;
 
 pub fn show_intro_menu(s: &mut Cursive){
+    set_theme_light(s);
     s.add_layer(Dialog::around(EditView::new()
 
         .on_submit(submit)

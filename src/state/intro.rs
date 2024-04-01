@@ -11,30 +11,16 @@
 //        --> yes? no?
 //
 //
-//
-//
-//
-//
-//
 // if user object found...
 //
 //        *Unload user object*
 //        Hello {Name}! Welcome back to K.I.L.L!
 //          Replay tutorial?
 //        --> yes? no?
-//
-//
-//
-//
-//
-    
 
-
-use crate::{utils::file::{check_for_name, return_dummy_id}, Cursive, Dialog, TextView};
+use crate::{utils::file::{check_for_name, return_dummy_user}, Cursive, Dialog, TextView};
 use cursive::{view::{Nameable, Resizable}, views::EditView};
-use crate::utils::file;
 use crate::state::menuselect::menu_select;
-use std::{thread, time};
 
 pub fn show_intro_menu(s: &mut Cursive){
     s.add_layer(Dialog::around(EditView::new()
@@ -63,7 +49,7 @@ fn submit(s: &mut Cursive, name: &str){
         s.pop_layer();
 
         s.add_layer(Dialog::new().content(TextView::new("Found name!")).button("Next", |s| {
-            menu_select(s, &return_dummy_id());
+            menu_select(s, return_dummy_user());
         }));
         
     }
@@ -73,8 +59,9 @@ fn submit(s: &mut Cursive, name: &str){
         s.add_layer(Dialog::new().content(TextView::new("Did not find name...")).button("Whatever.", |s| {
             //Create a new user here
             //
-
-            menu_select(s, &return_dummy_id());
+            
+            //Pass that user's id into here
+            menu_select(s, return_dummy_user());
         }));
     }
 

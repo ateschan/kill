@@ -10,3 +10,4 @@ authors = ["ateschan <addisonteschan@gmail.com>"]
 
 [dependencies]
 cursive = "0.20"
+cursive-multiplex = "0.6.0"

@@ -11,3 +11,4 @@ authors = ["ateschan <addisonteschan@gmail.com>"]
 [dependencies]
 cursive = "0.20"
 cursive-multiplex = "0.6.0"
+rand = "0.8.5"

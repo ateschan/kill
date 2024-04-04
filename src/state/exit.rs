@@ -2,7 +2,6 @@
 //
 // --> yes? no?
 //
-//
 use crate::{Dialog, Cursive};
 
 pub fn show_exit_menu(s: &mut Cursive) {

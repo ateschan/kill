@@ -36,16 +36,3 @@ impl Game{
 //         self.clone().teardown()
 //     }
 // }
-//
-// I need to split each game into 3 phases...
-//
-// 1) ---> | setup | the game and create any nessesary files and directories
-//
-// 2) ---> | check | the output of the scripter against the 1st public answer and the 2nd private answer
-// (Display the output of STDOUT in the terminal section of the ui.
-//
-// 3) ---> | teardown | delete any files created by the program
-//
-// All games should implment these phases, so include them in the meta.rs
-
-// Hidden answer & public answer will be defined in the game file

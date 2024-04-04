@@ -1,6 +1,8 @@
 //A user has a name, int it, and a vec of times with the coresponding index to the game
 //use std::vec::Vec;
 use std::default::Default;
+use crate::games::meta::Game;
+use crate::games::list::game_list;
 //use crate::games::meta::Game;
 //Adding a set of derive values to customize defaults
 
@@ -13,5 +15,5 @@ pub struct User {
  //  times : Vec<f64>,
  //  preferred_theme : String,
  //  total_attempts : i32,
-  // game_meta : Vec<Game>,
+   pub games : Vec<Game>
 }

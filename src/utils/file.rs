@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::collections::HashMap;
 use crate::utils::user::User;
-
+use crate::games::list::game_list;
 
 
 //Bits and pieces used for debug purposes
@@ -17,7 +17,8 @@ pub fn return_dummy_id() -> i32{
 pub fn return_dummy_user() -> User{
     User{
         name : "Addison".to_string(),
-        id : 34
+        id : 34,
+        games : game_list()
     }
 }
 

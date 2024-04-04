@@ -19,28 +19,24 @@
 //        --> yes? no?
 
 use crate::{utils::file::{check_for_name, return_dummy_user}, Cursive, Dialog, TextView};
-use cursive::{view::Nameable, views::EditView};
+use cursive::{view::Margins, view::Nameable, views::EditView};
 use crate::state::menuselect::menu_select;
-use crate::utils::theme::set_theme_light;
+use crate::utils::theme::set_theme_sub_menu;
 
 pub fn show_intro_menu(s: &mut Cursive){
-    set_theme_light(s);
+    set_theme_sub_menu(s);
     s.add_layer(Dialog::around(EditView::new()
-
         .on_submit(submit)
         .with_name("name"))
         .title("What is your name?")
-        .button("Ok", |s|{
+        .button("Submit", |s|{
             let name = 
                 s.call_on_name("name", |view: &mut EditView| {
                     view.get_content()
                 }).unwrap();
             submit(s, &name);
         })
-        .button("Cancel", |s|{
-            s.pop_layer();
-        })
-
+        .padding(Margins::lrtb(1, 1, 2, 0))
         );
 }
 
@@ -49,11 +45,9 @@ fn submit(s: &mut Cursive, name: &str){
    s.add_layer(Dialog::new().content(TextView::new("Checking name: ".to_owned() + name + "...")));
     if check_for_name(name){
         s.pop_layer();
-
         s.add_layer(Dialog::new().content(TextView::new("Found name!")).button("Next", |s| {
             menu_select(s, return_dummy_user());
         }));
-        
     }
 
     else{
@@ -61,7 +55,6 @@ fn submit(s: &mut Cursive, name: &str){
         s.add_layer(Dialog::new().content(TextView::new("Did not find name...")).button("Whatever.", |s| {
             //Create a new user here
             //
-            
             //Pass that user's id into here
             menu_select(s, return_dummy_user());
         }));

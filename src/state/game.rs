@@ -36,15 +36,56 @@ pub fn engine(s: &mut Cursive, game : Game, user : User){
 
     let mut rootbuilder = StyledString::plain("");
    
-    let obj_name = StyledString::styled("\n   Objective", Color::Dark(cursive::theme::BaseColor::Red));
-    let desc_name = StyledString::styled("\n   Description", Color::Dark(cursive::theme::BaseColor::Red));
-    let styled_game_desc = StyledString::plain(" - ".to_string() + &game.clone().objective + "\n");
-    let styled_game_obj = StyledString::plain(" - ".to_string() + &game.clone().description + "\n");
+    if game.clone().name == "Tutorial"{
+        
+     let header = StyledString::styled("\n - Welcome to KILL - \n", Color::Dark(cursive::theme::BaseColor::Blue));
+
+
+     let software_goals_header = StyledString::styled("\n - What is this? - ", Color::Dark(cursive::theme::BaseColor::Red));
+     let software_goals = StyledString::plain("
+         \n\tKILL stands for keep it linux loser.
+         \n\tThe purpose of this software is to provide a locally ran series of learning tasks to help those who may be trying to learn bash or text manipulation in linux.
+         \n\tI have personally seen too many programmers who struggle with using the terminal and this software aims to help fix that. ".to_string() + &game.clone().objective + "\n");
+
+     let controls_header = StyledString::styled("\n - Controls - ", Color::Dark(cursive::theme::BaseColor::Red));
+     let controls = StyledString::plain("
+     \n\t Use <ALT> + ARROW KEYS to switch between views.
+     \n\t Use <CTRL> + ARROW KEYS to manipulate the multiplexer.
+     \n\t Use <ESC> to focus hidden menu, then use ARROW KEYS to select an item.
+         ".to_string() + &game.clone().objective + "\n");
+
+     let howto_header = StyledString::styled("\n - How to play - ", Color::Dark(cursive::theme::BaseColor::Red));
+     let howto = StyledString::plain("
     
-   rootbuilder.append(obj_name.clone());
-   rootbuilder.append(styled_game_obj.clone());
-   rootbuilder.append(desc_name.clone());
-   rootbuilder.append(styled_game_desc.clone());
+    \n\t 1) Look at the game's objective and description.
+    \n\t\t- You may need to find new commands using a combination between the web and commands like 'man' & 'apropos'
+    \n\t 2) In the input field, type in the correct script.
+    \n\t\t- When you submit the input field, it is prepended with the necessary shebang! (#!/bin/sh).
+    \n\t 3) Open the menu and select run
+    \n\n\t If the command is correct, it will automatically detect and send you to a prompt.
+    \n\t Otherwise, you may need to revise your script.
+    \n\t Have fun and good luck! Use printf to print 'KILL' to proceed...
+         ".to_string() + &game.clone().objective + "\n");
+     
+    rootbuilder.append(header);
+    rootbuilder.append(software_goals_header);
+    rootbuilder.append(software_goals);
+    rootbuilder.append(controls_header);
+    rootbuilder.append(controls);
+    rootbuilder.append(howto_header);
+    rootbuilder.append(howto);
+   
+    }
+    else{
+        let obj_name = StyledString::styled("\n   Objective", Color::Dark(cursive::theme::BaseColor::Red));
+        let desc_name = StyledString::styled("\n   Description", Color::Dark(cursive::theme::BaseColor::Red));
+        let styled_game_desc = StyledString::plain(" - ".to_string() + &game.clone().objective + "\n");
+        let styled_game_obj = StyledString::plain(" - ".to_string() + &game.clone().description + "\n");
+        rootbuilder.append(obj_name.clone());
+        rootbuilder.append(styled_game_obj.clone());
+        rootbuilder.append(desc_name.clone());
+        rootbuilder.append(styled_game_desc.clone());
+    }
 
     let instructions = Panel::new(ResizedView::with_full_screen(ScrollView::new(TextView::new(rootbuilder))));
    
@@ -91,8 +132,11 @@ pub fn engine(s: &mut Cursive, game : Game, user : User){
 
 
 
-s.add_fullscreen_layer(boxes);
 
+
+
+
+//defining the menu system.
     s.menubar()
         .add_subtree(
             "Menu",
@@ -105,10 +149,10 @@ s.add_fullscreen_layer(boxes);
                             .get_content()
                             .to_string();
                         let out : String = run::execute(content.clone());
-                        s.find_name::<TextView>(&("out".to_owned() + &game.name)).unwrap().set_content(out.clone());
+                        s.find_name::<TextView>(&("out".to_owned() + &game.name)).unwrap().set_content(out.clone() + "<");
                         if game.clone().check(out) == true{
                             show_correct(s, return_dummy_user());
-                        };
+                        }
                     }
                 )
                 .subtree(
@@ -133,12 +177,16 @@ s.add_fullscreen_layer(boxes);
                         .leaf("Exit to main menu", move |s| {
                             on_submit_closure(s);
                         })
-                        .leaf("Exit Kill", |s| {
+                        .leaf("Exit KILL", |s| {
                             show_exit_menu(s);
                         })
                 )
+                .leaf("?", move |s|{
+                    s.add_layer(Dialog::info("Controls").content(TextView::new("<ALT> + ARROW KEYS = switch between views.\n<CTRL> + ARROW KEYS = manipulate the multiplexer.")))
+                })
         );
 
+s.add_fullscreen_layer(boxes);
     s.add_global_callback(cursive::event::Key::Esc, |s| s.select_menubar());
 }
 
@@ -150,5 +198,3 @@ pub fn show_correct(s: &mut Cursive, user : User){
            menu_select(s, return_dummy_user().clone())})
        .button("No", |s| {s.pop_layer();}));
 }
-
-

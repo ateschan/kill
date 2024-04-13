@@ -2,7 +2,7 @@
 //TODO: Integrate a list of games into user. ONLY pass user object in addition to the Cursive
 //context
 //
-//TODO: Write the tutorial
+//TODO: Write some kind of help menu
 //
 //TODO: implement state saving and parsing for saving user game data in a local toml file, then
 //getting that file to maintain persistence across docker sessions.

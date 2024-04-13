@@ -12,3 +12,4 @@ authors = ["ateschan <addisonteschan@gmail.com>"]
 cursive = "0.20"
 cursive-multiplex = "0.6.0"
 rand = "0.8.5"
+glob = "0.3.1"

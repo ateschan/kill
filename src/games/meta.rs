@@ -31,8 +31,3 @@ impl Game{
     }
 }
 
-// impl Drop for Game {
-//     fn drop(&mut self) {
-//         self.clone().teardown()
-//     }
-// }

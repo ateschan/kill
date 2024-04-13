@@ -3,7 +3,9 @@ use std::io::prelude::*;
 use std::collections::HashMap;
 use crate::utils::user::User;
 use crate::games::list::game_list;
-
+use std::fs::create_dir;
+use std::path::Path;
+use glob::glob;
 
 //Bits and pieces used for debug purposes
 pub fn check_for_name(name: &str) -> bool{
@@ -26,8 +28,21 @@ pub fn return_dummy_user() -> User{
 
 //USED UTILITIES DO NOT DELETE
 pub fn fs_create(fs : HashMap<String,String>) -> std::io::Result<()> {
+    let path = "killfs/";
+    if !std::path::Path::new(&path).exists() {
+        std::fs::create_dir(path)?;
+    }
+    else {
+        for entry in glob("killfs/*.txt").expect("Failed to read glob pattern") {
+        match entry {
+            Ok(path) => std::fs::remove_file(path).unwrap(),
+            Err(e) => println!("{:?}", e),
+            }
+        }
+    }
+
     for (fname, fcontent) in fs {
-        let mut file = File::create(fname)?;
+        let mut file = File::create(path.to_owned() + &fname)?;
         file.write(fcontent.as_bytes())?;
     }
     Ok(())

@@ -4,7 +4,7 @@ use cursive::Cursive;
 
 use crate::games::citty_cat::new;
 use crate::games::{meta::Game, list::game_list};
-use crate::state::{tutorial::tutorial_engine, game::engine};
+use crate::state::game::engine;
 use crate::utils::file::return_dummy_user;
 use crate::utils::user::User;
 use crate::utils::theme::set_theme_sub_menu;
@@ -21,7 +21,7 @@ pub fn menu_select(s: &mut Cursive, user : User){
 
     //Render games out in a list view, allow user to select
     s.add_layer(ScrollView::new(Dialog::new()
-        .padding(Margins::lrtb(3, 3, 2, 2))
+        .padding(Margins::lrtb(3, 3, 1, 1))
         .title("Game Select")
         .content(select)
         ));
@@ -34,11 +34,6 @@ pub fn menu_select(s: &mut Cursive, user : User){
                game = i.clone();
             }
         }
-        if game.name != "Tutorial"{
-            engine(s, game.clone(), return_dummy_user().clone());
-        }
-        else {
-            tutorial_engine(s, game.clone(), return_dummy_user().clone());
-        }
+        engine(s, game.clone(), return_dummy_user().clone());
     }
 

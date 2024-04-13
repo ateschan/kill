@@ -45,8 +45,8 @@ pub fn set_theme_light(s : &mut Cursive){
                 palette[Background] = White.dark();
                 palette[View] = White.dark();
                 palette[Primary] = Black.dark();
-                palette[TitlePrimary] = Blue.light();
-                palette[Secondary] = Blue.light();
+                palette[TitlePrimary] = Blue.dark();
+                palette[Secondary] = Blue.dark();
                 palette[Highlight] = Black.dark();
             }
 
@@ -55,7 +55,7 @@ pub fn set_theme_light(s : &mut Cursive){
                 use cursive::theme::Effect::*;
                 use cursive::theme::PaletteStyle::*;
                 use cursive::theme::Style;
-                palette[Highlight] = Style::from(Blue.light()).combine(Bold);
+                palette[Highlight] = Style::from(Blue.dark()).combine(Bold);
             }
         }),
     });

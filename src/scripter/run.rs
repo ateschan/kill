@@ -8,10 +8,9 @@ pub fn execute(input : String) -> String{
     let script = head + &input; 
     let output = Command::new("bash")
         .arg("-c")
-        .arg(script)
+        .arg("cd killfs && ".to_owned() + &script)
         .output()
         .expect("Failed to execute command");
 
-    
     String::from_utf8_lossy(&output.stdout).to_string()
 }

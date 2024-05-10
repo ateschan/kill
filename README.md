@@ -10,7 +10,7 @@ Made for the Plus +STEM Internship at NVC
 Kill is a simple TUI program that provides entry level challenges for beginner learning bash. <br />
 
 # Controls
-<esc> to enter the menu <br />
+Escape to enter the menu <br />
 Arrow Keys to select menu options <br />
 ALT + Arrow Keys to select different panels <br />
 CTRL + Arrow Keys to resize panels
